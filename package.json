@@ -1,0 +1,26 @@
+{
+  "name": "squel-top-start-at",
+  "version": "0.0.1",
+  "description": "Squel.js plugin that adds support for the `TOP N` and `START AT N` keywords.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "squel",
+    "top",
+    "start",
+    "at",
+    "limit",
+    "offset"
+  ],
+  "peerDependencies": {
+    "squel": "3.x"
+  },
+  "author": "Robert Bost <bostrt@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "squel": "3.x",
+    "mocha": "~1.18.2"
+  }
+}
