@@ -55,8 +55,8 @@ exports.selectTop = squel.selectTop = function(options) {
 	allowNestedOptions['allowNested'] = true;
 
 	return squel.select(options, [
-		new squel.cls.StringBlock(options, 'SELECT'),
-		new TopStartAtBlock(options),
+        new squel.cls.StringBlock(options, 'SELECT'),
+        new TopStartAtBlock(options),
         new squel.cls.DistinctBlock(options),
         new squel.cls.GetFieldBlock(options),
         new squel.cls.FromTableBlock(allowNestedOptions),

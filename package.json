@@ -1,11 +1,9 @@
 {
   "name": "squel-top-start-at",
+  "homepage": "https://github.com/bostrt/squel-top-start-at",
   "version": "0.0.1",
   "description": "Squel.js plugin that adds support for the `TOP N` and `START AT N` keywords.",
   "main": "index.js",
-  "scripts": {
-    "test": "mocha"
-  },
   "keywords": [
     "squel",
     "top",
@@ -16,6 +14,16 @@
   ],
   "peerDependencies": {
     "squel": "3.x"
+  },
+  "files": [
+    "index.js",
+    "README.md",
+    "package.json",
+    "LICENSE"
+  ],
+  "repository" : {
+    "type": "git",
+    "url": "https://github.com/bostrt/squel-top-start-at.git"
   },
   "author": "Robert Bost <bostrt@gmail.com>",
   "license": "MIT",
