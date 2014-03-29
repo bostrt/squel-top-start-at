@@ -9,24 +9,50 @@ Function.prototype.inheritsFrom = function(parentClass) {
 var TopStartAtBlock = function() {};
 TopStartAtBlock.inheritsFrom(squel.cls.Block);
 
+TopStartAtBlock.prototype._sanitizeTop = function(top) {
+	var parsed = parseInt(top);
+	if (isNaN(parsed)) {
+		if (top && typeof top === 'string' && top.toLowerCase() == 'all') {
+			return 'ALL';
+		} else {
+			throw new Error('Invalid argument for top()');
+		}
+	}
+
+	if (parsed > 0) {
+		return top;
+	} else {
+		throw new Error('Invalid argument for top()');
+	}
+};
+
+TopStartAtBlock.prototype._sanitizeStartAt = function(start) {
+	var parsed = parseInt(start);
+	if (isNaN(parsed)) {
+		throw new Error('Invalid argument for startAt()');
+	}
+
+	if (parsed > 0) {
+		return start;
+	} else {
+		throw new Error('Invalid argument for startAt()');
+	}
+};
+
 TopStartAtBlock.prototype.first = function() {
 	// top+start at and first are mutually exclusive.
+	if  (this._top || this._start) {
+		throw new Error('Cannot call first() with top()/startAt()');
+	}
 	this._first = true;
-	this._top = null;
-	this._start = null;
 };
 
 TopStartAtBlock.prototype.top = function(top) {
-	// TODO: Sanitize....ALL or simple expressions.
-	// top+start at and first are mutually exclusive.
-	this._top = top;
-	this._first = false;
+	this._top = this._sanitizeTop(top);
 };
 
 TopStartAtBlock.prototype.startAt = function(start) {
-	// top+start at and first are mutually exclusive.	
-	this._start = start;
-	this._first = false;
+	this._start = this._sanitizeStartAt(start);
 };
 
 TopStartAtBlock.prototype.buildStr = function() {
@@ -49,6 +75,8 @@ TopStartAtBlock.prototype.buildStr = function() {
 	}
 	return str;
 }
+
+squel.cls.TopStartAtBlock = TopStartAtBlock;
 
 exports.selectTop = squel.selectTop = function(options) {
 	var allowNestedOptions = options || {};
