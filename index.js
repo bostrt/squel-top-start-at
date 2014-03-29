@@ -9,6 +9,9 @@ Function.prototype.inheritsFrom = function(parentClass) {
 var TopStartAtBlock = function() {};
 TopStartAtBlock.inheritsFrom(squel.cls.Block);
 
+/**
+ * Sanitizes TOP parameter. Must be numeric (>0) or "ALL".
+ */
 TopStartAtBlock.prototype._sanitizeTop = function(top) {
 	var parsed = parseInt(top);
 	if (isNaN(parsed)) {
@@ -26,6 +29,9 @@ TopStartAtBlock.prototype._sanitizeTop = function(top) {
 	}
 };
 
+/**
+ * Sanitizes START AT parameter. Must be numeric (>0).
+ */
 TopStartAtBlock.prototype._sanitizeStartAt = function(start) {
 	var parsed = parseInt(start);
 	if (isNaN(parsed)) {
@@ -39,6 +45,11 @@ TopStartAtBlock.prototype._sanitizeStartAt = function(start) {
 	}
 };
 
+/**
+ * Adds FIRST keyword to query. Throws Error if either top() 
+ * or startAt() have been called as FIRST and TOP [START AT] are
+ * mutualy exclusive keywords.
+ */
 TopStartAtBlock.prototype.first = function() {
 	// top+start at and first are mutually exclusive.
 	if  (this._top || this._start) {
@@ -47,11 +58,27 @@ TopStartAtBlock.prototype.first = function() {
 	this._first = true;
 };
 
+/**
+ * Adds TOP keyword to query. Throws Error if first()
+ * has been called. FIRST and TOP are mutually exclusive 
+ * keywords.
+ */
 TopStartAtBlock.prototype.top = function(top) {
+	if (this._first) {
+		throw new Error('Cannot call first() with top()/startAt()');
+	}
 	this._top = this._sanitizeTop(top);
 };
 
+/**
+ * Adds START AT keyword to query. Throws Error if first()
+ * has been called. FIRST and TOP START AT are mutually exclusive
+ * keywords.
+ */
 TopStartAtBlock.prototype.startAt = function(start) {
+	if (this._first) {
+		throw new Error('Cannot call first() with top()/startAt()');
+	}
 	this._start = this._sanitizeStartAt(start);
 };
 

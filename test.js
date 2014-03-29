@@ -61,6 +61,11 @@ describe('select', function() {
 		});
 	});
 	describe('#top', function() {
+		it('should throw Error because of present FIRST', function() {
+			var block = new squel.cls.TopStartAtBlock();
+			block.first();
+			assert.throws(block.top.bind(block, '10'), Error);
+		});
 		it('should return "SELECT TOP 2 * FROM test"', function() {
 			var query = squel.selectTop().top('2').from('test').toString();
 			assert.equal('SELECT TOP 2 * FROM test', query);
@@ -77,6 +82,11 @@ describe('select', function() {
 			it('should throw Error because of missing TOP', function() {
 				var func = selectTop().startAt(3).toString;
 				assert.throws(func, Error);
+			});
+			it('should throw Error because of present FIRST', function() {
+				var block = new squel.cls.TopStartAtBlock();
+				block.first();
+				assert.throws(block.startAt.bind(block, '50'), Error);
 			});
 		});
 	});
