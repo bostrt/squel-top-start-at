@@ -6,7 +6,7 @@ squel-top-start-at [![Build Status](https://travis-ci.org/bostrt/squel-top-start
 
 Install
 ========
-`npm install squel-top-start-at` *PENDING*
+`npm install squel-top-start-at`
 
 Usage
 ======
